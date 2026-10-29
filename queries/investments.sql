@@ -7,12 +7,12 @@ SELECT
 	valor_mensal_investido AS mensal,
 	saldo, 
 	rentabilidade AS "rent%",
-	COUNT(tipo_transacao) FILTER(WHERE tipo_transacao = 'APORTE') AS "aportes(qtd)" 
+	COUNT(tipo_transacao)AS "aportes(qtd)" 
 FROM investimento 
 INNER JOIN ativo_financeiro
 	ON ativo_financeiro.id = investimento.id_ativo_financeiro
-INNER JOIN transacao
-	ON transacao.id_ativo_financeiro = ativo_financeiro.id
+LEFT JOIN transacao
+	ON transacao.id_ativo_financeiro = ativo_financeiro.id AND transacao.tipo_transacao = 'APORTE'
 INNER JOIN conta 
 	ON conta.id = ativo_financeiro.id_conta
 INNER JOIN usuario
